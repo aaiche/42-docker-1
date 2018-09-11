@@ -1,0 +1,9 @@
+#
+# Supprimer l’ensemble des images de containers stocké sur la machine virtuelle
+# Char, en une seule commande aussi.
+#
+
+
+# we need to make sure that we are connected to Char first ???
+eval $(docker-machine env Char)
+docker image rm --force $(docker image ls --quiet)

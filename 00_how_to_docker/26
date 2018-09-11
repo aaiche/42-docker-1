@@ -1,0 +1,53 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                         +-------------------------------+                                                  |
+# |                         | service: rabbitmq             |                                                  |
+# |                         | 'orbital-command'             |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                         +-------------------------------+                                                  |
+# |                         | service: engineering-bay      |                                                  |
+# |                         | 'engineering-bay'             |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +-------------------+                             +------------+-------------------+                      |
+# |  |C: engineering-bay |                             |C: rabbitmq |C: engineering-bay |                      |
+# |  +-+-----------------+-----------+                 +-+----------+----------------+--+                      |
+# |  | | Docker Engine: Swarm Mgr    |                 | | Docker Engine: Swarm Node |  |                      |
+# |  | | Char                        |                 | | Aiur                      |  |                      |
+# |  | |                             |                 | |                           |  |                      |
+# |  +-v-- + ------------------------+                 +-v- + -----------------------v--+                      |
+# |    |   |                                             |  |                        |                         |
+# |    | IP: 192.168.99.100                              | IP: 192.168.99.101        |                         |
+# |    |   |                                             |  |                        |                         |
+# |    |   v                                             |  v                        |                         |
+# |    |                                                 |                           |                         |
+# |    |                                                 |                           |                         |
+# |  +-v-------------------------------------------------v---------------------------v----------------------+  |
+# |  |  reseau OVERLAY: overmind 10.0.0.0/24                                                                |  |
+# |  +------------------------------------------------------------------------------------------------------+  |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+
+
+#
+# Lancer un service 42school/engineering-bay en 2 répliques et faire en sorte que
+# le service fonctionne (se référer à la doc fournie dans hub.docker.com). Ce service
+# s’appellera engineering-bay et sera sur le reseau overmind
+#
+
+docker service create               \
+    --name engineering-bay          \
+    --network overmind              \
+    --env OC_USERNAME=42            \
+    --env OC_PASSWD=42              \
+    --replicas 2                    \
+    --detach                        \
+    42school/engineering-bay
+

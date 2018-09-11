@@ -1,0 +1,68 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +--+                                                                                                      |
+# |  |C:|                                                                                                      |
+# |  +--+----------------------------+                                                                         |
+# |  |   Docker Engine:              |                                                                         |
+# |  |                               |                                                                         |
+# |  |   Char        Dock. Daemon    |                                                                         |
+# |  +---- + -----------------^------+                                                                         |
+# |        |                  |                                                                                |
+# |      IP: 192.168.99.100   |                                                                                |
+# |        |                  |                                                                                |
+# |        v                  |                                                                                |
+# |                           |                                                                                |
+# |                           |_________ Maintenant 'docker client' peut communiquer avec 'docker daemon'      |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+#
+# Assigner les variables spécifiques à la machine virtuelle Char dans l’env courant
+# de votre terminal, de sorte que vous pouvez lancer la commande docker ps sans
+# erreurs. Une seule commande est attendue pour fixer les 4 variables d’environnement
+# et il vous est interdit d’utiliser le builtin de votre shell pour set à la main
+# ces variables.
+#
+
+
+#
+#   Verifier le shell, car la commande suivante ne va fonctionner probablement qu avec 'zsh'
+#       echo $SHELL
+#           /bin/zsh
+#   Verifier que les variables ne sont pas positionnees
+#       set | egrep --binary-files=text  DOCKER
+#
+
+eval $(docker-machine env Char)
+
+#
+#   On peut voir maintenant ce que la commande ci-dessus a fait
+#       set | egrep --binary-files=text  DOCKER
+#
+
+#   Si on ne veut pas s embeter a executer cette commande a chaque que l on ouvre un terminal
+#   on met cette commande dans le '.zshrc'
+#       echo $SHELL
+#           /bin/zsh
+#       echo 'eval $(docker-machine env Char)' >> ~/.zshrc
+#

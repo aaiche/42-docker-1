@@ -1,0 +1,4 @@
+ docker-machine rm --force -y Char
+ docker-machine create --driver virtualbox default
+ eval $(docker-machine env default)
+ echo 'eval $(docker-machine env default)' >> ~/.zshrc

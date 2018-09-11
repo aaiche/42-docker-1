@@ -1,0 +1,67 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |        _____________________ on le nomme 'overlord': ce sera plus que d utiiser le ID du container         |
+# |       |                                                                                                    |
+# |       |                                                                                                    |
+# |       |                                                                                                    |
+# |  +----v---------+                                                                                          |
+# |  |C: nginx      |                                                                                          |
+# |  +-+------------+----------------+                                                                         |
+# |  | | Docker Engine:    ______    |                                                                         |
+# |  | |                  (Images)   |                                                                         |
+# |  |80 Char             (      )   |                                                                         |
+# |  +-v-- + ------------------------+                                                                         |
+# |    |   |                                                                                                   |
+# |    | IP: 192.168.99.100:5000 ----> ngnix est accessible depuis cette addresse a l exterieur de Char        |
+# |    |   |                                                                                                   |
+# |    |   v                                                                                                   |
+# |    |                                                                                                       |
+# |    |                                                                                                       |
+# |   5000 on mappe le port 80 a ici 5000 de facon qui il devienne public et accessible a l exterieur de Char  |
+# |    |                                                                                                       |
+# |    v                                                                                                       |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+#
+# Lancer un container nginx disponible sur le Docker Hub en tâche de fond. Le
+# container lancé doit avoir pour nom overlord, doit pouvoir redémarrer de lui même
+# et doit avoir le port 80 du container rattaché au port 5000 de Char. Vous
+# pouvez vérifier le fonctionnement de votre container en allant sur un
+# http://<ip-de-char>:5000 comme URL sur votre navigateur internet.
+#
+
+
+# Run a nginx container
+
+docker container run --detach --publish 5000:80 --name=overlord --restart always  nginx
+
+
+#
+#   How to read the port mapping:
+#   
+#       +-------------+-------+                                         +-------------+-------+
+#       | Host ip     | port  +---------------------------------------> | Container ip| port  |
+#       +-------------+-------+                                         +-------------+-------+
+#       +---------------------+                                         +---------------------+
+#       | la requete entre ici|                                         | la requete est      |
+#       |                     | +----- est redirigee vers ------------> | traitee dans le     |
+#       |                     |                                         | container           |
+#       +---------------------+                                         +---------------------+
+
+#
+#  Comment verifier la policy restart ? --> TBD 
+#

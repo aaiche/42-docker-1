@@ -1,0 +1,43 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |        _____________________ on le nomme 'overlord': ce sera plus que d utiiser le ID du container         |
+# |       |                                                                                                    |
+# |       |                                                                                                    |
+# |       |                                                                                                    |
+# |  +----v---------+                                                                                          |
+# |  |C: nginx      |                                                                                          |
+# |  +-+------------+----------------+                                                                         |
+# |  | | Docker Engine:    ______    |                                                                         |
+# |  | |                  (Images)   |                                                                         |
+# |  |80 Char             (      )   |                                                                         |
+# |  +-v-- + ------------------------+                                                                         |
+# |    |   |                                                                                                   |
+# |    | IP: 192.168.99.100:5000 ----> ngnix est accessible depuis cette addresse a l exterieur de Char        |
+# |    |   |                                                                                                   |
+# |    |   v                                                                                                   |
+# |    |                                                                                                       |
+# |    |                                                                                                       |
+# |   5000 on mappe le port 80 a ici 5000 de facon qui il devienne public et accessible a l exterieur de Char  |
+# |    |                                                                                                       |
+# |    v                                                                                                       |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+# 
+# Relancer le container overlord
+#
+
+docker container restart overlord

@@ -1,0 +1,10 @@
+#
+# Forcer l’arrêt et supprimer l’ensemble des containers (tous états confondus), en
+# une seule commande.
+#
+
+docker container rm -f $(docker container ls -a -q)
+
+
+# Est ce qu on detruit que les containers sur lequels on est connecte
+

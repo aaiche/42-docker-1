@@ -1,0 +1,43 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +--+                                                                                                      |
+# |  |C:|                                                                                                      |
+# |  +--+-------------------------------------------------------------------------------+                      |
+# |  |   Docker Engine:                                                                 |                      |
+# |  |   Char                                                                           |                      |
+# |  |        ---------------------------- Le volume est independant des containers     |                      |
+# |  |       |                             et c est pour cela que ces donnees sont      |                      |
+# |  |     __v__                           persistentes. On peut voir son contenu en:   |                      |
+# |  |    (     )                           + un ptit coup d inspect sur le volume qui nous                    |
+# |  |    (     ) vol   : hatchery            donne le chemin ou stocke le volume. Par exple:                  |
+# |  |    (     )                            '/mnt/sda1/var/lib/docker/volumes/hatchery/_data                  |
+# |  |     -----                            + se ssh'er sur Char                        |                      |
+# |  |                                        + examiner le contenu du path ci-dessus   |                      |
+# |  +----- + --------------------------------------------------------------------------+                      |
+# |         |                                                                                                  |
+# |        IP: 192.168.99.100                                                                                  |
+# |         |                                                                                                  |
+# |         v                                                                                                  |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+
+#
+# Créer un volume hatchery
+#
+
+docker volume create --name=hatchery

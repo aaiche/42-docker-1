@@ -1,0 +1,51 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +--------------+                                                                                          |
+# |  |C: ngnix      |                                                                                          |
+# |  | |            |                                                                                          |
+# |  | |            |                                                                                          |
+# |  |IP: 172.17.0.2:80                                                                                        |
+# |  | |            |                                                                                          |
+# |  +-v------------+----------------+                                                                         |
+# |  | | Docker Engine:    ______    |                                                                         |
+# |  |80                  (Images)   |                                                                         |
+# |  | | Char             (      )   |                                                                         |
+# |  +-v-- + ------------------------+                                                                         |
+# |    |   |                                                                                                   |
+# |    | IP: 192.168.99.100:5000                                                                               |
+# |    |   |                                                                                                   |
+# |    |   v                                                                                                   |
+# |    |                                                                                                       |
+# |    |                                                                                                       |
+# |   5000                                                                                                     |
+# |    |                                                                                                       |
+# |    v                                                                                                       |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+#
+# Récupérer l’adresse IP interne du container overlord sans lancer son shell et en
+# une commande.
+#
+# ce genre de 'syntaxe' est derive de golang. Et s appelle go templates
+#
+docker container inspect --format='{{.Name}} ip address: {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' overlord
+
+# 
+# On peut utiliser ceci, mais je ne suis pas sur du fonctionnement de 'hostname -i': j ai l impression qu il utilise '/etc/hosts/' qui est normalement rafraichie par docker
+#
+#       docker container exec -it overlord hostname -i
+#

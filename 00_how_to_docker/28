@@ -1,0 +1,54 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                         +-------------------------------+                                                  |
+# |                         | service: rabbitmq             |                                                  |
+# |                         | 'orbital-command'             |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                         +-------------------------------+                                                  |
+# |                         | service: engineering-bay      |                                                  |
+# |                         | 'engineering-bay'             |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                         +-------------------------------+                                                  |
+# |                         | service: engineering-bay      |                                                  |
+# |                         | 'marines'                     |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +-------------------+-----------+                 +------------+-------------------+-----------+          |
+# |  |C: engineering-bay |C: marines |                 |C: rabbitmq |C: engineering-bay |C: marines |          |
+# |  +-+-----------------+---------+-+                 +-+----------+----------------+--+---------+-+---+      |
+# |  | | Docker Engine: Swarm Mgr  | |                 | | Docker Engine: Swarm Node |            |     |      |
+# |  | | Char                      | |                 | | Aiur                      |            |     |      |
+# |  | |                           | |                 | |                           |            |     |      |
+# |  +-v-- + ----------------------v-+                 +-v- + -----------------------v------------v-----+      |
+# |    |   |                       |                     |  |                        |            |            |
+# |    | IP: 192.168.99.100        |                     | IP: 192.168.99.101        |            |            |
+# |    |   |                       |                     |  |                        |            |            |
+# |    |   v                       |                     |  v                        |            |            |
+# |    |                           |                     |                           |            |            |
+# |    |                           |                     |                           |            |            |
+# |  +-v---------------------------v---------------------v---------------------------v------------v---------+  |
+# |  |  reseau OVERLAY: overmind 10.0.0.0/24                                                                |  |
+# |  +------------------------------------------------------------------------------------------------------+  |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+
+#
+# ... Damn, des zergs sont en train d’attaquer orbital-command et couper le service
+# engineering-bay ne servira a rien... Vous devez envoyer des Marines pour les
+# éliminer... Lancer un service 42school/marine-squad en 2 repliques, et faites en
+# sorte que le service fonctionne (se référer à la doc fournie dans hub.docker.com).
+# Ce service s’appellera ... marines et sera sur le reseau overmind
+#
+
+docker service create               \
+    --name marines                  \
+    --network overmind              \
+    --env OC_USERNAME=42            \
+    --env OC_PASSWD=42              \
+    --replicas 2                    \
+    --detach                        \
+    42school/marine-squad
+

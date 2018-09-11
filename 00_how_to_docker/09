@@ -1,0 +1,56 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |          ----------- On peut modifier le container mais l image reste intacte. Alors comment               |
+# |         |            peut on garder ces changements?                                                       |
+# |         |               - on peut creer une image a partir d un container. Cf 'commit' (Mauvaise Method)   |
+# |         |               - on fait comme ils font dans Docker Hub, partir d une image de base et y la       |
+# |         |                 construire en ajoutant, modifiant des choses. Cf 'Dockerfile'                    |
+# |         |                                                                                                  |
+# |         |                                                                                                  |
+# |  +------v-------+                                                                                          |
+# |  |C: debian     |                                                                                          |
+# |  +--------------+----------------+                                                                         |
+# |  |   Docker Engine:    ______    |                                                                         |
+# |  |                    (Images)   |                                                                         |
+# |  |   Char             (      )   |                                                                         |
+# |  +---- + ------------------------+                                                                         |
+# |        |                                                                                                   |
+# |      IP: 192.168.99.100                                                                                    |
+# |        |                                                                                                   |
+# |        v                                                                                                   |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+#
+# Depuis le shell d’un container debian, faire en sorte d’installer via le gestionnaire
+# de paquets du container, de quoi compiler un code source en C et le pusher sur
+# un repo git (en veillant avant de bien mettre à jour le gestionnaire de paquets et
+# les paquets présents de base dans le container). Seules les commandes à effectuer
+# dans le container sont demandées pour cet exercice.
+#
+
+docker container run --interactive --tty debian bash -c "apt-get update -y; apt-get upgrade -y; apt-get install build-essential -y; apt-get install git -y; echo 'gcc version:'; gcc --version; echo 'make version:'; make --version; echo 'git version:'; git --version"
+
+
+#
+#   docker container run --interactive --tty debian bash 
+# puis:
+#   apt-get update -y && apt-get upgrade -y
+#   apt-get install build-essential -y
+#   apt-get install git
+#

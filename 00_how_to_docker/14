@@ -1,0 +1,69 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                   +-----------------+              +----------------+                      |
+# |                                   |C: mysql         |              |C: wordpress    |                      |
+# |                                   |  'spawning-pool +--------------+   'lair'       |                      |
+# |                                   |                 | Link         |                |                      |
+# |                                   |                 +--------------+                |                      |
+# |                                   |IP: xx.xx.xx.xx  |              |IP: xx.xx.xx.xx |                      |
+# |  +--------------------------------+-+---+-----------+--------------+--+-------------+                      |
+# |  |   Docker Engine:                 |   |                             |             |                      |
+# |  |                                  |   |                             |             |                      |
+# |  |   Char                           v   |                             |             |                      |
+# |  |                                3306  |                             v             |                      |
+# |  |        _____________________________/                             80             |                      |
+# |  |     __|__                                                          |             |                      |
+# |  |    (     )                                                         |             |                      |
+# |  |    (     ) vol   : hatchery                                        |             |                      |
+# |  |    (     ) sql DB: zerglings                                       |             |                      |
+# |  |     -----                                                          |             |                      |
+# |  +--------------------------------------------------------------------+-------------+                      |
+# |                                                                       |                                    |
+# |                                                                       |                                    |
+# |                                                                       v                                    |
+# |                                                                     8080                                   |
+# |                                                                       |                                    |
+# |                                                                       |                                    |
+# |                                                                       |                                    |
+# |                                                                       v                                    |
+# |                                                                    IP: 192.168.99.100:8080                 |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+
+# 
+# Lancer un container wordpress en tâche de fond, pour le lulz. Le container doit
+# avoir pour nom lair, le port 80 du container doit etre bindé au port 8080 de
+# la machine virtuelle et doit pouvoir utiliser le container spawning-pool comme
+# service de base de données. Vous pouvez tenter d’accéder à lair sur votre machine
+# via un navigateur en rentrant l’adresse IP de la machine virtuelle comme URL.
+# Bravo, vous venez de deployer un site Wordpress fonctionnel en 2 commandes !
+# 
+
+docker container run  --name lair  --link spawning-pool:my_sql_alias --publish 8080:80 --detach wordpress
+
+#                                           
+#                                            ^                   ^
+#                                            |                   |
+#                      Container Source ____/                    |
+#                                                                |
+#                                  Container Source Alias   ____/
+#
+#
+
+
+#
+# test
+#       browser : http://192.168.99.100:8080
+#
+#       Vous aurez besoin des infos:     
+#           - db name
+#           - db password
+#           - mysql container ip address
+#           ...
+#

@@ -1,0 +1,82 @@
+#
+# +------------------------------------------------------------------------------------------------------------+
+# |                         +-------------------------------+                                                  |
+# |                         | service: rabbitmq             |                                                  |
+# |                         | 'orbital-command'             |                                                  |
+# |                         +-------------------------------+                                                  |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                  rabbitmq users:                                           |
+# |                                                   - guest#guest change en 42                               |
+# |                                                   - aa#aa ajoute                                           |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |                                                                                                            |
+# |  +-+                                               +------------+                                          |
+# |  |C|                                               |C: rabbitmq |                                          |
+# |  +-+-----------------------------+                 +-+----------+-------------------+                      |
+# |  |   Docker Engine: Swarm Mgr    |                 | | Docker Engine: Swarm Node    |                      |
+# |  |   Char                        |                 | | Aiur                         |                      |
+# |  |                               |                 | |                              |                      |
+# |  +---- + ------------------------+                 +-v- + --------------------------+                      |
+# |        |                                             |  |                                                  |
+# |      IP: 192.168.99.100                              | IP: 192.168.99.101                                  |
+# |        |                                             |  |                                                  |
+# |        v                                             |  v                                                  |
+# |                                                      |                                                     |
+# |                                                      |                                                     |
+# |  +---------------------------------------------------v--------------------------------------------------+  |
+# |  |  reseau OVERLAY: overmind 10.0.0.0/24                                                                |  |
+# |  +------------------------------------------------------------------------------------------------------+  |
+# |                                                                                                            |
+# +------------------------------------------------------------------------------------------------------------+
+#
+
+#
+# Lancer un SERVICE rabbitmq qui aura pour nom orbital-command. Vous devrez
+# définir un user et un mot de passe spécifiques à l’utilisation du service RabbitMQ,
+# et ceux-ci seront à votre libre convenance. Ce service sera sur le reseau overmind
+#
+
+#
+# deploy a service
+#
+# docker service create : declares the service name, network, port, image: tag and scale
+# Create a service. A service is an abstraction that says:
+#          I want to run this type of container but i am not going to start and manage the individual instances. I want the swarm to do that for me.
+#
+# RabbitMQ Management console:
+#   PORT 15672 for RabbitMQ version 3.x
+#   PORT 5672 RabbitMQ main port
+#
+# rabbitmq:3-management instead of rabbitmq, so we can access to the mgt console
+#
+
+# we change the default guest#guest user to 42#42
+docker service create               \
+    --name orbital-command          \
+    --network overmind              \
+    --publish 4242:15672            \
+    --publish 5672:5672             \
+    --env RABBITMQ_DEFAULT_USER=42  \
+    --env RABBITMQ_DEFAULT_PASS=42  \
+    rabbitmq:3-management 
+
+
+#
+# To add a user:
+#   https://stackoverflow.com/questions/30747469/how-to-add-initial-users-when-starting-a-rabbitmq-docker-container
+#
+#RABBITMQ_USER=aa
+#RABBITMQ_PASSWORD=aa
+# docker container exec $(docker container ps -q -f name=orbital-command) bash -c '\
+#       sleep 6; \
+#       rabbitmqctl add_user aa aa 2>/dev/null;\
+#       rabbitmqctl set_user_tags aa administrator;\
+#       rabbitmqctl set_permissions -p / aa ".*" ".*" ".*"\
+#   '
+
